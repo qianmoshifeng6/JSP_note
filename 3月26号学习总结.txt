@@ -1,0 +1,50 @@
+c:forEach 标签使用总结
+
+1. 干什么用的
+就是一个在JSP页面里循环显示数据的标签，比如把列表里的商品、数组里的名字一个个列出来。
+
+2. 基本写法
+<c:forEach items="${要循环的列表或数组}" var="随便起个名代表当前项">
+    ${随便起个名} <!-- 这里就会显示每一项内容 -->
+</c:forEach>
+
+
+3. 常用属性
+items: 要循环的东西，比如 ${fruits}
+
+var: 给每个元素起个临时名字，比如叫“fruit”
+
+begin: 从第几个开始（0是第一个）
+
+end: 到第几个结束
+
+step: 隔几个取一个
+
+varStatus: 循环状态，可以用 ${status.index} 拿到当前是第几个
+
+4. 举个实际例子
+假设在Servlet里放了一个水果列表：
+request.setAttribute("fruitList", Arrays.asList("苹果", "香蕉", "橘子"));
+
+JSP页面里可以这样用：
+<ul>
+    <c:forEach items="${fruitList}" var="f">
+        <li>${f}</li>
+    </c:forEach>
+</ul>
+
+显示效果就是：
+• 苹果
+• 香蕉
+• 橘子
+
+5. 简单说明
+用之前要在JSP页面最上面加一行：
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
+循环的东西（items）最好在Servlet里准备好，再传到JSP
+
+这个标签比直接在JSP里写Java循环（<% for(...) %>）看着干净
+
+6. 常见搭配
+经常和 c:if 一起用，比如只显示符合条件的数据。
